@@ -3,7 +3,7 @@
 class DAOUser {
 
     public function login($userName, $password) {
-        $sql = 'SELECT id_user, name FROM users WHERE user_name = ? AND password = ?;';
+        $sql = 'SELECT id_user, name FROM users WHERE BINARY user_name = ? AND BINARY password = ?;';
 
         $connection = new Connection();
         $prepared = $connection->prepareSQL($sql);
