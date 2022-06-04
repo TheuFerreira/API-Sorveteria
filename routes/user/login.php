@@ -14,6 +14,7 @@ $request = $dao->login($userName, $password);
 if ($request == null) {
     $request['idUser'] = -1;
     $request['name'] = '';
+    $request['address'] = '';
     $request['message'] = 'Usuário não encontrado';
 } else {
     $request['message'] = '';
