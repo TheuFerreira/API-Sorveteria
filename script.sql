@@ -13,6 +13,8 @@ password VARCHAR(20) NOT NULL,
 status TINYINT NOT NULL DEFAULT 1
 );
 
+INSERT INTO users (name, address, cellphone, user_name, password) VALUES ('a', 'a', 'a', 'a', 'a');
+
 CREATE TABLE category(
 id_category TINYINT NOT NULL PRIMARY KEY,
 description VARCHAR(20) NOT NULL,
@@ -73,8 +75,6 @@ INSERT INTO product (title, description, price, path) VALUES
 ('Milk Shake de Chocolate', 'Um delicioso milk shake par ate refrescar no dia a dia', 11, 'milk_shake_chocolate.webp'),
 ('Milk Shake de Morango', 'Um delicioso milk shake par ate refrescar no dia a dia', 11, 'milk_shake_morango.webp');
 
-SELECT * FROM product;
-
 CREATE TABLE category_product(
 id_category TINYINT NOT NULL,
 id_product INT NOT NULL,
@@ -123,20 +123,27 @@ INSERT INTO category_product (id_category, id_product) VALUES
 
 CREATE TABLE sale(
 id_sale INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-date DATETIME NOT NULL
+id_user INT NOT NULL,
+date DATETIME NOT NULL,
+
+FOREIGN KEY (id_user) REFERENCES users (id_user)
 );
 
-INSERT INTO sale (date) VALUES 
-('2022-05-11 15:45:12'),
-('2022-05-11 15:46:15'),
-('2022-05-11 15:50:45'),
-('2022-05-11 15:55:13');
+INSERT INTO sale (id_user, date) VALUES 
+(1, '2022-05-11 15:45:12'),
+(1, '2022-05-12 15:46:15'),
+(1, '2022-05-13 15:50:45'),
+(1, '2022-05-14 15:55:13');
 
 CREATE TABLE sale_product(
 id_sale INT NOT NULL,
 id_product INT NOT NULL,
 price DECIMAL(10,2) NOT NULL,
-quantity INT NOT NULL
+quantity INT NOT NULL,
+
+PRIMARY KEY (id_sale, id_product),
+FOREIGN KEY (id_sale) REFERENCES sale (id_sale),
+FOREIGN KEY (id_product) REFERENCES product (id_product)
 );
 
 INSERT INTO sale_product VALUES 
@@ -154,3 +161,45 @@ INSERT INTO sale_product VALUES
 (4, 17, 4, 3),
 (4, 19, 3, 4),
 (4, 5, 16.50, 3);
+
+CREATE TABLE notification_type(
+id_notification_type INT NOT NULL PRIMARY KEY,
+description VARCHAR(100) NOT NULL
+);
+
+INSERT INTO notification_type VALUES 
+(1, 'Pagamento aprovado'),
+(2, 'Seu pedido está sendo feito'),
+(3, 'Seu pedido está a caminho'),
+(4, 'Pedido foi entregue');
+
+CREATE TABLE notification(
+id_notification INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+id_sale INT NOT NULL,
+id_notification_type INT NOT NULL,
+date DATETIME NOT NULL,
+
+FOREIGN KEY (id_sale) REFERENCES sale (id_sale),
+FOREIGN KEY (id_notification_type) REFERENCES notification_type (id_notification_type)
+);
+
+INSERT INTO notification (id_sale, id_notification_type, date) VALUES 
+(1, 1, '2022-05-11 15:45:12'),
+(1, 2, '2022-05-11 15:45:13'),
+(1, 3, '2022-05-11 16:00:00'),
+(1, 4, '2022-05-11 16:15:00'),
+
+(2, 1, '2022-05-12 15:46:12'),
+(2, 2, '2022-05-12 15:46:13'),
+(2, 3, '2022-05-12 16:00:00'),
+(2, 4, '2022-05-12 16:15:00'),
+
+(3, 1, '2022-05-13 15:50:12'),
+(3, 2, '2022-05-13 15:50:13'),
+(3, 3, '2022-05-13 16:15:00'),
+(3, 4, '2022-05-13 16:30:00'),
+
+(4, 1, '2022-05-14 15:55:12'),
+(4, 2, '2022-05-14 15:55:13'),
+(4, 3, '2022-05-14 16:15:00'),
+(4, 4, '2022-05-14 16:30:00');
