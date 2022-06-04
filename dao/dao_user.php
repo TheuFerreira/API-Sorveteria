@@ -5,9 +5,8 @@ class DAOUser {
     public function login($userName, $password) {
         $sql = 'SELECT id_user, name FROM users WHERE user_name = ? AND password = ?;';
 
-        $dsn = 'mysql:host=127.0.0.1;port=3306;dbname=sorveteria';
-        $connection = new PDO($dsn, 'root', '12345');
-        $prepared = $connection->prepare($sql);
+        $connection = new Connection();
+        $prepared = $connection->prepareSQL($sql);
         $prepared->bindValue(1, $userName);
         $prepared->bindValue(2, $password);
         
@@ -30,9 +29,8 @@ class DAOUser {
     public function register($name, $userName, $address, $cellphone, $password) {
         $sql = 'INSERT INTO users (name, user_name, address, cellphone, password) VALUES (?, ?, ?, ?, ?);';
 
-        $dsn = 'mysql:host=127.0.0.1;port=3306;dbname=sorveteria';
-        $connection = new PDO($dsn, 'root', '12345');
-        $prepared = $connection->prepare($sql);
+        $connection = new Connection();
+        $prepared = $connection->prepareSQL($sql);
         $prepared->bindValue(1, $name);
         $prepared->bindValue(2, $userName);
         $prepared->bindValue(3, $address);
@@ -46,9 +44,9 @@ class DAOUser {
 
     public function userExists($userName) {
         $sql = 'SELECT COUNT(id_user) AS count FROM users WHERE user_name = ?;';
-        $dsn = 'mysql:host=127.0.0.1;port=3306;dbname=sorveteria';
-        $connection = new PDO($dsn, 'root', '12345');
-        $prepared = $connection->prepare($sql);
+        
+        $connection = new Connection();
+        $prepared = $connection->prepareSQL($sql);
         $prepared->bindValue(1, $userName);
         $prepared->execute();
 

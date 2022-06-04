@@ -1,10 +1,10 @@
 <?php
 
+require '../../database/connection.php';
 require '../../dao/dao_user.php';
 
 $json = file_get_contents('php://input');
 $data = json_decode($json);
-
 $name = $data->name;
 $userName = $data->user_name;
 $address = $data->address;
