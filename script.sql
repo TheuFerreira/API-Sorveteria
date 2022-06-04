@@ -120,3 +120,37 @@ INSERT INTO category_product (id_category, id_product) VALUES
 -- Milk Shakes
 (6, 23),
 (6, 24);
+
+CREATE TABLE sale(
+id_sale INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+date DATETIME NOT NULL
+);
+
+INSERT INTO sale (date) VALUES 
+('2022-05-11 15:45:12'),
+('2022-05-11 15:46:15'),
+('2022-05-11 15:50:45'),
+('2022-05-11 15:55:13');
+
+CREATE TABLE sale_product(
+id_sale INT NOT NULL,
+id_product INT NOT NULL,
+price DECIMAL(10,2) NOT NULL,
+quantity INT NOT NULL
+);
+
+INSERT INTO sale_product VALUES 
+(1, 1, 12, 1),
+(1, 2, 14, 1),
+(1, 4, 16, 1),
+(2, 2, 14,2),
+(2, 9, 6.50, 6),
+(2, 10, 8, 4),
+(2, 15, 22, 2),
+(3, 22, 3.5, 1),
+(3, 24, 11, 3),
+(3, 8, 5, 8),
+(4, 7, 6, 2),
+(4, 17, 4, 3),
+(4, 19, 3, 4),
+(4, 5, 16.50, 3);

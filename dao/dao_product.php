@@ -37,6 +37,24 @@ class DAOProduct {
         $result = $psd->fetchAll(PDO::FETCH_BOTH);
         return $result;
     }
+
+    public function getMostSelled(int $limit) {
+        $sql = '
+            SELECT p.id_product, p.title, p.price, p.path
+            FROM sale_product AS sp
+            INNER JOIN product AS p ON sp.id_product = p.id_product
+            WHERE p.status = 1
+            GROUP BY sp.id_product
+            ORDER BY COUNT(sp.id_product) DESC
+            LIMIT ' . $limit . ';';
+
+        $connection = new Connection();
+        $psd = $connection->prepareSQL($sql);
+        $psd->execute();
+
+        $result = $psd->fetchAll(PDO::FETCH_BOTH);
+        return $result;
+    }
 }
 
 ?>
