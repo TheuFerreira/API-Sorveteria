@@ -11,6 +11,13 @@ $password = $data->password;
 
 $dao = new DAOUser();
 $request = $dao->login($userName, $password);
+if ($request == null) {
+    $request['idUser'] = -1;
+    $request['name'] = '';
+    $request['message'] = 'Usuário não encontrado';
+} else {
+    $request['message'] = '';
+}
 
 echo json_encode($request);
 
