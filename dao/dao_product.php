@@ -55,6 +55,22 @@ class DAOProduct {
         $result = $psd->fetchAll(PDO::FETCH_BOTH);
         return $result;
     }
+
+    public function getById(int $idProduct) {
+        $sql = '
+            SELECT id_product, title, description, price, path 
+            FROM product
+            WHERE id_product = ?;
+        ';
+
+        $connection = new Connection();
+        $psd = $connection->prepareSQL($sql);
+        $psd->bindValue(1, $idProduct);
+        $psd->execute();
+
+        $result = $psd->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
 
 ?>
