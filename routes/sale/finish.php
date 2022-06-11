@@ -9,7 +9,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json);
 
 $idUser = $data->id_user;
-$date = $data->date;
+$date = gmdate("Y-m-d H:i:s");
 $products = $data->products;
 
 $daoSale = new DAOSale();
@@ -27,7 +27,7 @@ for ($i = 0; $i < count($products); $i++) {
 $idNotificationType = 1;
 
 $daoNotification = new DAONotification();
-$daoNotification->insert($idSale, $idNotificationType, gmdate("Y-m-d H:i:s"));
+$daoNotification->insert($idSale, $idNotificationType, $date);
 
 echo json_encode(true);
 
