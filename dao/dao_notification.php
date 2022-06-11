@@ -19,6 +19,22 @@ class DAONotification {
         
         return $result;
     }
+
+    public function insert(int $idSale, int $idNotificationType, $date) {
+        $sql = '
+            INSERT INTO notification (id_sale, id_notification_type, date)
+            VALUES (?, ?, ?);
+        ';
+
+        $connection = new Connection();
+        $psd = $connection->prepareSQL($sql);
+        $psd->bindValue(1, $idSale);
+        $psd->bindValue(2, $idNotificationType);
+        $psd->bindValue(3, $date);
+        $result = $psd->execute();
+        
+        return $result;
+    }
 }
 
 ?>
